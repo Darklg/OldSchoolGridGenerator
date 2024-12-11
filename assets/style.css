@@ -113,6 +113,13 @@ input[type="number"] {
     margin: 1em 0;
 }
 
+[data-set-values] {
+    text-decoration: underline;
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+}
+
 /* ----------------------------------------------------------
   Grid wrap
 ---------------------------------------------------------- */
