@@ -62,9 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
             _last_fract = _tmp_fract;
         }
 
-
         _debug += '<h3>Similar grids</h3>';
-
 
         /* Half */
         var _subgrid = [2, 3],
@@ -73,22 +71,26 @@ document.addEventListener("DOMContentLoaded", function() {
             _tmp_nbcol;
 
         /* Double */
-        _tmp_nbcol = Math.floor(nb_col / 2);
-        _tmp_col = _tmp_val * 2 + gut_width;
+        _tmp_nbcol = Math.round(nb_col / 2);
+        _tmp_col = col_width * 2 + gut_width;
         if (_tmp_nbcol > 1) {
             _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
         }
 
+        /* Half & third */
         for (var _sub in _subgrid) {
             _tmp_gut = gut_width * (_subgrid[_sub] - 1);
+            _tmp_val = Math.round((col_width - _tmp_gut) / _subgrid[_sub]);
             _tmp_nbcol = nb_col * _subgrid[_sub];
-            _tmp_col = Math.floor((_tmp_val - _tmp_gut) / _subgrid[_sub]);
-            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
+            if (_tmp_val < 1) {
+                continue;
+            }
+            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_val + '">' + _tmp_nbcol + ' cols : ' + _tmp_val + 'px</p>';
         }
 
-        _debug += '<h3>Reset</h3>';
         _tmp_nbcol = 12;
         _tmp_col = 90;
+        _debug += '<h3>Reset</h3>';
         _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
 
 
