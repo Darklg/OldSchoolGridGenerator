@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
         $gutInput = document.getElementById('gutter_width'),
         $nbcolInput = document.getElementById('nb_col'),
         $debugInfos = document.getElementById('debug-infos'),
+        $generatedGrid = document.getElementById('generated-grid'),
         gut_width = 0,
         col_width = 0,
         nb_col = 0;
@@ -31,7 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem('col_width', col_width);
         localStorage.setItem('nb_col', nb_col);
 
-        var _debug = '';
+        var _debug = '',
+            _grid_html;
         var _versions = [1, 2, 3, 4],
             _tmp_val,
             _tmp_i,
@@ -93,6 +95,12 @@ document.addEventListener("DOMContentLoaded", function() {
         _debug += '<h3>Reset</h3>';
         _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
 
+        _grid_html = '';
+        for (var _i = 0; _i < nb_col; _i++) {
+            _grid_html += '<div class="grid-item"><div class="placehold"><br /></div></div>';
+        }
+
+        $generatedGrid.innerHTML = '<div class="grid-inner"><div class="grid-wrap">' + _grid_html + '</div></div>';
 
         document.body.style.setProperty('--grid-gut-width', gut_width + 'px');
         $debugInfos.innerHTML = _debug;
