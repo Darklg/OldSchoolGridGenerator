@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
         $nbcolInput.value = tmp_nb_col;
     }
 
-
     function compute_values() {
         gut_width = parseInt($gutInput.value, 10);
         col_width = parseInt($colInput.value, 10);
@@ -76,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
         _tmp_nbcol = Math.round(nb_col / 2);
         _tmp_col = col_width * 2 + gut_width;
         if (_tmp_nbcol > 1) {
-            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
+            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + ';' + gut_width + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
         }
 
         /* Half & third */
@@ -87,13 +86,16 @@ document.addEventListener("DOMContentLoaded", function() {
             if (_tmp_val < 1) {
                 continue;
             }
-            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_val + '">' + _tmp_nbcol + ' cols : ' + _tmp_val + 'px</p>';
+            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_val + ';' + gut_width + '">' + _tmp_nbcol + ' cols : ' + _tmp_val + 'px</p>';
         }
 
         _tmp_nbcol = 12;
         _tmp_col = 90;
-        _debug += '<h3>Reset</h3>';
-        _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
+        _tmp_gut = 20;
+        if (gut_width != _tmp_gut || col_width != _tmp_col || nb_col != _tmp_nbcol) {
+            _debug += '<h3>Reset</h3>';
+            _debug += '<p data-set-values="' + _tmp_nbcol + ';' + _tmp_col + ';' + _tmp_gut + '">' + _tmp_nbcol + ' cols : ' + _tmp_col + 'px</p>';
+        }
 
         _grid_html = '';
         for (var _i = 0; _i < nb_col; _i++) {
@@ -113,11 +115,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.addEventListener('click', function(event) {
         if (event.target.matches('[data-set-values]')) {
-            var values = event.target.getAttribute('data-set-values').split(';');
-            $nbcolInput.value = values[0];
-            $colInput.value = values[1];
+            set_values(event.target.getAttribute('data-set-values'));
             compute_values();
         }
     });
+
+    function set_values(dataSetValues) {
+        var values = dataSetValues.split(';');
+        $nbcolInput.value = values[0];
+        $colInput.value = values[1];
+        $gutInput.value = values[2];
+    }
 
 });
